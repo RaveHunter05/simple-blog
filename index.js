@@ -1,8 +1,12 @@
+const bodyParser = require('body-parser')
 const express = require('express')
 const path = require('path')
 
+//Inicializar express
 const app = express()
 
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({extended: true}))
 
 const PORT = process.env.PORT || 8000
 
