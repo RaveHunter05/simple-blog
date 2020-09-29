@@ -1,6 +1,7 @@
 const bodyParser = require('body-parser')
 const express = require('express')
-const path = require('path')
+
+const main = require('./main/urls')
 
 //Inicializar express
 const app = express()
@@ -8,8 +9,9 @@ const app = express()
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
 
-
-app.use('/', require('./main/urls'))
+//Para inicializar la base de datos y redirigir a la ruta principal
+// main.dataBase();
+app.use('/', main.router)
 
 const PORT = process.env.PORT || 8000
 
