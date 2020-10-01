@@ -13,4 +13,11 @@ const Blog = db.define('Blog',{
     }
 })
 
-module.exports = {Blog}
+const Categories = db.define('Categories', {
+    name: {
+        type: DataTypes.STRING,
+        allowNull: false
+    }
+})
+
+module.exports = {Blog, Categories}
