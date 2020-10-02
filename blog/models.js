@@ -2,6 +2,8 @@ const {Sequelize, DataTypes} = require('sequelize')
 
 const {db} = require('../main/settings')
 
+
+//Blog
 const Blog = db.define('Blog',{
     title: {
         type: DataTypes.STRING,
@@ -12,6 +14,8 @@ const Blog = db.define('Blog',{
         allowNull: false
     }
 })
+
+//Categorias
 
 const Categories = db.define('Categories', {
     name: {
