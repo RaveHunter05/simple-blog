@@ -1,6 +1,11 @@
-<h1>bonjour</h1>
+<h1>Bonjour</h1>
 
-<form action="/blog/mainImage" method="POST" enctype="multipart/form-data">
+<form action="/blog/insert-blog" method="POST" enctype="multipart/form-data">
+    <label for="title">Título</label>
+    <input type="text" name="title">
+    <label for="content">Contenido</label>
+    <textarea name="content" cols="30" rows="10"></textarea>
+    <label for="image">Main Image</label>
     <input type="file" name="image">
     <input type="submit" value="Upload">
 </form>
