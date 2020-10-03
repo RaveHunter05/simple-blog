@@ -22,10 +22,15 @@ let blogController = {
         let {image} = req.body
 
         if(req.files){
-            // console.log(req.files.image)
             let file = req.files.image
             let fileName = file.name
-            // console.log(fileName + 'asdfasdfasdf')
+            file.mv(__dirname+ '/uploads/mainImages/' + fileName, function(err){
+                if(err){
+                    res.send(err)
+                }else{
+                    res.send("File Uploaded")
+                }
+            })
         }
     }
 }
