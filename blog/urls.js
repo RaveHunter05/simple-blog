@@ -13,6 +13,6 @@ router.get('/blogs', blogController.showBlogs)
 
 router.post('/insert-blog', blogController.addBlog)
 
-router.post('/', blogController.addImage)
+router.post('/mainImage', blogController.addImage)
 
 module.exports = router
