@@ -9,7 +9,6 @@ function dataBase(){
     db.authenticate()
     .then(()=>console.log('Connected'))
     .catch(err => console. log('There was an error', err))
-
     alterTable()
 }
 

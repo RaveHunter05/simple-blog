@@ -16,6 +16,17 @@ let blogController = {
         Blog.create({title,content})
         .then(response => res.json({"respuesta": response}))
         .catch(err => console.error("There was an error", err))
+    },
+    addImage(req,res){
+
+        let {image} = req.body
+
+        if(req.files){
+            // console.log(req.files.image)
+            let file = req.files.image
+            let fileName = file.name
+            // console.log(fileName + 'asdfasdfasdf')
+        }
     }
 }
 

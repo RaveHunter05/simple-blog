@@ -6,12 +6,13 @@ const {blogController} = require('./controllers')
 
 
 router.get('/', (req,res) => {
-    res.json({"respuesta":"HOLA HIJUEPUTAS XDXDD"})
+    res.sendFile(__dirname + '/templates/index.html')
 })
 
 router.get('/blogs', blogController.showBlogs)
 
 router.post('/insert-blog', blogController.addBlog)
 
+router.post('/', blogController.addImage)
 
 module.exports = router

@@ -12,6 +12,9 @@ const Blog = db.define('Blog',{
     content: {
         type: DataTypes.TEXT,
         allowNull: false
+    },
+    mainImage: {
+        type: DataTypes.TEXT
     }
 })
 
