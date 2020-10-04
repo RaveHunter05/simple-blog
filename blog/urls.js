@@ -11,8 +11,24 @@ router.get('/', (req,res) => {
 
 router.get('/blogs', blogController.showBlogs)
 
-router.post('/insert-blog', blogController.addBlog)
+router.post('/insert-blog', verifyToken, blogController.addBlog)
 
 router.post('/mainImage', blogController.addImage)
+
+function verifyToken(req, res, next){
+    const bearerHeader = req.headers.authorization
+    // res.send(bearerHeader)
+    if(typeof bearerHeader !== 'undefined'){
+        const bearer = bearerHeader.split(' ')
+        //Get token from array
+        const bearerToken = bearer[1]
+        // Set the token
+        req.token = bearerToken
+        //Next middleware
+        next()
+    }else{
+        res.sendStatus(403)
+    }
+}
 
 module.exports = router

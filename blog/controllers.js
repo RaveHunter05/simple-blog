@@ -1,6 +1,5 @@
-var models = require('./urls')
-
 const {Blog} = require('./models')
+const jwt = require('jsonwebtoken')
 
 let blogController = {
     showBlogs(req,res){
@@ -11,29 +10,33 @@ let blogController = {
         .catch(err=> console.error(err))
     },
     addBlog(req,res){
-        let {title, content} =  req.body
-        console.log(content)
-        if(req.files){
-                
-            let {image} = req.files
-            let fileName = image.name
-            let direction = __dirname + '/uploads/mainImages/' + fileName
-            image.mv(direction , function(err){
-                if(err){
-                    res.send(err)
+        jwt.verify(req.token, 'secretkey', (err, authData)=>{
+            if(err){
+                res.sendStatus(403)
+            }else{
+                let {title, content} =  req.body
+                console.log(content)
+                if(req.files){
+                    
+                    let {image} = req.files
+                    let fileName = image.name
+                    let direction = __dirname + '/uploads/mainImages/' + fileName
+                    image.mv(direction , function(err){
+                        if(err){
+                            res.send(err)
+                        }else{
+                            Blog.create({title, content, mainImage: direction })
+                            .then(response => res.json({"respuesta": response}))
+                            .catch(err => console.error("There was an error", err))
+                        }
+                    })
                 }else{
-                    Blog.create({title, content, mainImage: direction })
+                    Blog.create({title,content})
                     .then(response => res.json({"respuesta": response}))
                     .catch(err => console.error("There was an error", err))
                 }
-            })
-        }else{
-            Blog.create({title,content})
-            .then(response => res.json({"respuesta": response}))
-            .catch(err => console.error("There was an error", err))
-        }
-        
-        
+            }
+        })
     },
     addImage(req,res){
 

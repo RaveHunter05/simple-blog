@@ -4,7 +4,11 @@ const express = require('express')
 // Redirectioning to main app
 const main = require('./main/urls')
 
+// Adding express-fileupload
 const upload = require('express-fileupload')
+
+//  Adding JWT
+const jwt = require('jsonwebtoken')
 
 // Using dotenv
 const dotenv=require('dotenv').config()
