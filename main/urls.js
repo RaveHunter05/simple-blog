@@ -7,6 +7,7 @@ const {db, forceTable, alterTable} = require('./settings')
 
 router.use('/blog', require('../blog/urls'))
 
+// Esto esta hardcodeado, hay que componerlo alv
 router.post('/login', (req,res) =>{
     // Mock user
     const user = {
@@ -15,7 +16,7 @@ router.post('/login', (req,res) =>{
         email: 'paul@gmail.com'
     }
     
-    jwt.sign({user}, 'secretkey', (err, token)=>{
+    jwt.sign({user}, 'secretkey', {expiresIn: '30s'}, (err, token)=>{
         res.json({
             token
         })
