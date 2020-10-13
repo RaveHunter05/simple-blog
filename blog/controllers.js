@@ -38,6 +38,32 @@ let blogController = {
             }
         })
     },
+    editBlog(req,res){
+        let {id, title, content, mainImage} = req.body
+        Blog.update({
+            title, content, mainImage
+        },{
+            where:{
+                id
+            }
+        })
+        .then(response=>{
+            res.json({"respuestas": response})
+        })
+        .catch(err=> console.error(err))
+    },
+    deleteBlog(req,res){
+        let {id} = req.body
+        Blog.destroy({
+            where:{
+                id
+            }
+        })
+        .then(response =>{
+            res.json({"respuestas": "sucessfully deleted " + id})
+        })
+        .catch(err=> console.error(err))
+    },
     addImage(req,res){
 
         let {image} = req.files

@@ -13,6 +13,10 @@ router.get('/blogs', blogController.showBlogs)
 
 router.post('/insert-blog', verifyToken, blogController.addBlog)
 
+router.put('/edit-blog', blogController.editBlog)
+
+router.delete('/delete-blog', blogController.deleteBlog)
+
 router.post('/mainImage', blogController.addImage)
 
 function verifyToken(req, res, next){
