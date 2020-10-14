@@ -9,6 +9,8 @@ router.get('/', (req,res) => {
     res.sendFile(__dirname + '/templates/index.html')
 })
 
+// Related to blog
+
 router.get('/blogs', blogController.showBlogs)
 
 router.post('/insert-blog', verifyToken, blogController.addBlog)

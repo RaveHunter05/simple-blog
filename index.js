@@ -9,6 +9,7 @@ const upload = require('express-fileupload')
 
 //  Adding JWT
 const jwt = require('jsonwebtoken')
+const cookieParser = require('cookie-parser')
 
 // Using dotenv
 const dotenv=require('dotenv').config()
@@ -18,6 +19,7 @@ const app = express()
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(cookieParser)
 
 app.use(upload())
 

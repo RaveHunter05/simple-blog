@@ -23,6 +23,10 @@ router.post('/login', (req,res) =>{
     })
 })
 
+router.post('/logout', (req,res) =>{
+    
+})
+
 function dataBase(){
     db.authenticate()
     .then(()=>console.log('Connected'))
