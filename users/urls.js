@@ -64,6 +64,13 @@ router.post('/register', (req,res) =>{
     
 })
 
+router.get('/isLogged', (req,res,next)=>{
+    if(req.isAuthenticated()){
+        res.send('yes')
+    }
+    res.send('no')
+})
+
 router.post('/login', passport.authenticate('local', {
     successRedirect: "/",
     failureRedirect: "/error"
@@ -78,7 +85,8 @@ router.get('/error', (req,res) =>{
 })
 
 router.post('/logout', (req,res) =>{
-    
+    req.logout()
+    res.send('deslogeado')
 })
 
 router.get('/users', (req,res) =>{
