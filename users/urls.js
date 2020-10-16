@@ -21,14 +21,16 @@ const {User} = require('./models')
 //     })
 // })
 
-router.post('/login', (req,res) =>{
-    const {email} = req.body
+router.post('/register', (req,res) =>{
+    const {name, password, email, nickname} = req.body
     User.findOne({where:{email}})
     .then(user =>{
         if(user){
             res.send('user already exists')
         }else{
-            res.send("user doesn't exist")
+            User.create({name, password, email, nickname})
+            .then(response => res.json({"respuesta": response}))
+            .catch(err => console.error("There was an error", err))
         }
     })
     .catch(err => console.error(err))
@@ -39,7 +41,7 @@ router.post('/logout', (req,res) =>{
     
 })
 
-router.get('/register', (req,res) =>{
+router.get('/users', (req,res) =>{
     User.findAll()
         .then(blogs=>{
             res.json({"respuestas": blogs})
