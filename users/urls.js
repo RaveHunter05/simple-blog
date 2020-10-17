@@ -4,7 +4,7 @@ const router = app.Router();
 const jwt = require('jsonwebtoken')
 const passport = require('passport')
 const session = require('express-session')
-const PassportLocal = require('passport-local')
+const PassportLocal = require('passport-local').Strategy
 
 const {User} = require('./models')
 
@@ -24,10 +24,14 @@ const {User} = require('./models')
 // })
 
 passport.use(new PassportLocal(function(username, password, done){
-    if(username === "codigofacilito" && password === "123"){
-        return done(null, {id: 1, name: "Paul"})
-    }
-    done(null, false)
+    // if(username === "codigofacilito" && password === "123"){
+    //     return done(null, {id: 1, name: "Paul"})
+    // }
+    // done(null, false)
+    User.findOne({where:{email:username, password}})
+    .then(x=>{
+        (x) ? done(null,x) : done(null,false)
+    })
 }))
 
 passport.serializeUser(function(user, done){
@@ -35,7 +39,15 @@ passport.serializeUser(function(user, done){
 })
 
 passport.deserializeUser(function(id, done){
-    done(null, {id: 1, name: "Paul" })
+    done(null, id)
+})
+
+router.get('/', (req,res) =>{
+    res.send('redirigido correctamente')
+})
+
+router.get('/error', (req,res) =>{
+    res.send('redirigido incorrectamente')
 })
 
 router.use(session({
@@ -75,14 +87,6 @@ router.post('/login', passport.authenticate('local', {
     successRedirect: "/",
     failureRedirect: "/error"
 }))
-
-router.get('/', (req,res) =>{
-    res.send('redirigido correctamente')
-})
-
-router.get('/error', (req,res) =>{
-    res.send('redirigido incorrectamente')
-})
 
 router.post('/logout', (req,res) =>{
     req.logout()
