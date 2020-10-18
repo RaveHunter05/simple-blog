@@ -32,6 +32,9 @@ passport.use(new PassportLocal(function(username, password, done){
     .then(x=>{
         (x) ? done(null,x) : done(null,false)
     })
+    .catch(err=>{
+        return done(err)
+    })
 }))
 
 passport.serializeUser(function(user, done){
