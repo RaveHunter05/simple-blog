@@ -96,7 +96,12 @@ router.post('/logout', (req,res) =>{
     res.send('deslogeado')
 })
 
-router.get('/users', (req,res) =>{
+//Ejemplo de middleware para restringir el acceso a solo gente logeada
+
+router.get('/users', (req,res,next)=>{
+    if(req.isAuthenticated()){return next()}
+    res.send('is not authenticated')
+},  (req,res) =>{
     User.findAll()
         .then(blogs=>{
             res.json({"respuestas": blogs})
