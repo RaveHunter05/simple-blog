@@ -42,7 +42,9 @@ passport.serializeUser(function(user, done){
 })
 
 passport.deserializeUser(function(id, done){
-    done(null, id)
+    User.findOne({where:{id}})
+    .then(x=> done(null, x))
+    .catch(err=> console.error(err))
 })
 
 router.get('/', (req,res) =>{
@@ -107,6 +109,15 @@ router.get('/users', (req,res,next)=>{
             res.json({"respuestas": blogs})
         })
         .catch(err=> console.error(err))
+})
+
+router.get('/current', (req,res,next)=>{
+    if(req.isAuthenticated()){return next()}
+    res.send('is not authenticated')
+}, (req,res)=>{
+    // req.user contains the information provided by deserializeUser
+    let variable = req.user
+    res.send(variable)
 })
 
 module.exports = router
