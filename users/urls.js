@@ -102,10 +102,7 @@ router.post('/logout', (req,res) =>{
 
 //Ejemplo de middleware para restringir el acceso a solo gente logeada
 
-router.get('/users', (req,res,next)=>{
-    if(req.isAuthenticated()){return next()}
-    res.send('is not authenticated')
-},  (req,res) =>{
+router.get('/users', checkAuthentication , (req,res) =>{
     User.findAll()
         .then(blogs=>{
             res.json({"respuestas": blogs})
@@ -113,13 +110,15 @@ router.get('/users', (req,res,next)=>{
         .catch(err=> console.error(err))
 })
 
-router.get('/current', (req,res,next)=>{
-    if(req.isAuthenticated()){return next()}
-    res.send('is not authenticated')
-}, (req,res)=>{
+router.get('/current', checkAuthentication, (req,res)=>{
     // req.user contains the information provided by deserializeUser
     let variable = req.user
     res.send(variable)
 })
+
+function checkAuthentication(req, res, next){
+    if(req.isAuthenticated()){return next()}
+    res.send('is not authenticated')
+}
 
 module.exports = router
