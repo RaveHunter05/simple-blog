@@ -21,6 +21,8 @@ router.delete('/delete-blog', blogController.deleteBlog)
 
 router.post('/mainImage', blogController.addImage)
 
+router.get('/blog-user/:users_id', blogController.blogUsers)
+
 function verifyToken(req, res, next){
     const bearerHeader = req.headers.authorization
     // res.send(bearerHeader)

@@ -79,6 +79,17 @@ let blogController = {
         //         }
         //     })
         // }
+    },
+    blogUsers(req,res){
+        let {users_id} = req.params
+        Blog.findAll({where:{users_id}})
+        .then(x=>{
+            if(x.length>0){res.send(x)}
+            res.sendStatus(404)
+        })
+        .catch(err=>{
+            console.error(err)
+        })
     }
 }
 

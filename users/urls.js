@@ -23,11 +23,9 @@ const {User} = require('./models')
 //     })
 // })
 
+// Login dinámico
+
 passport.use(new PassportLocal(function(username, password, done){
-    // if(username === "codigofacilito" && password === "123"){
-    //     return done(null, {id: 1, name: "Paul"})
-    // }
-    // done(null, false)
     User.findOne({where:{email:username, password}})
     .then(x=>{
         (x) ? done(null,x) : done(null,false)
@@ -37,9 +35,13 @@ passport.use(new PassportLocal(function(username, password, done){
     })
 }))
 
+// Este es el dato que se guarda del usuario en la cookie (hasta donde tengo entendido)
+
 passport.serializeUser(function(user, done){
     done(null, user.id)
 })
+
+// Este es el dato que se retorna del usuario cuando escribe req.user posteriormente
 
 passport.deserializeUser(function(id, done){
     User.findOne({where:{id}})
