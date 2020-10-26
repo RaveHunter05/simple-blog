@@ -11,17 +11,17 @@ router.get('/', (req, res) => {
 
 // Related to blog
 
-router.get('/blogs', checkAuthentication,  blogController.showBlogs)
+router.get('/blogs',  blogController.showBlogs)
 
-router.post('/insert-blog', checkAuthentication, blogController.addBlog)
+router.post('/insert-blog', blogController.addBlog)
 
-router.put('/edit-blog', checkAuthentication, blogController.editBlog)
+router.put('/edit-blog', blogController.editBlog)
 
-router.delete('/delete-blog', checkAuthentication, blogController.deleteBlog)
+router.delete('/delete-blog',  blogController.deleteBlog)
 
 router.post('/mainImage', blogController.addImage)
 
-router.get('/blog-user/:users_id', checkAuthentication, blogController.blogUsers)
+router.get('/blog-user/:users_id', blogController.blogUsers)
 
 function verifyToken(req, res, next) {
     const bearerHeader = req.headers.authorization
@@ -37,11 +37,6 @@ function verifyToken(req, res, next) {
     } else {
         res.sendStatus(403)
     }
-}
-
-function checkAuthentication(req, res, next){
-    if(req.isAuthenticated()){return next()}
-    res.send('is not authenticated')
 }
 
 module.exports = router
