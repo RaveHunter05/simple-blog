@@ -53,9 +53,16 @@ router.get('/isLogged', (req,res,next)=>{
     res.send('no')
 })
 
+router.get('/correct', (req,res) =>{
+    res.send('redirigido correctamente')
+})
+
+router.get('/error', (req,res) =>{
+    res.send('redirigido incorrectamente')
+})
 
 router.post('/login', passport.authenticate('local', {
-    successRedirect: "/",
+    successRedirect: "/correct",
     failureRedirect: "/error"
 }))
 

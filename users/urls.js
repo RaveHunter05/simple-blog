@@ -3,8 +3,6 @@ const router = app.Router();
 
 const jwt = require('jsonwebtoken')
 
-const session = require('express-session')
-
 const {User} = require('./models')
 
 // router.post('/login', (req,res) =>{
@@ -21,14 +19,6 @@ const {User} = require('./models')
 //         })
 //     })
 // })
-
-router.get('/', (req,res) =>{
-    res.send('redirigido correctamente')
-})
-
-router.get('/error', (req,res) =>{
-    res.send('redirigido incorrectamente')
-})
 
 router.post('/register', (req,res) =>{
     const {name, password, email, nickname} = req.body
