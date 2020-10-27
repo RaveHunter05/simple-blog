@@ -16,6 +16,18 @@ let userController = {
         })
         .catch(err => console.error(err))
         
+    },
+    showUsers(req,res){
+        User.findAll()
+            .then(blogs=>{
+                res.json({"respuestas": blogs})
+            })
+            .catch(err=> console.error(err))
+    },
+    showCurrentUser(req,res){
+        // req.user contains the information provided by deserializeUser
+        let variable = req.user
+        res.send(variable)
     }
 }
 

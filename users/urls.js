@@ -22,38 +22,13 @@ let {userController} = require('./controllers')
 //     })
 // })
 
-router.post('/register', (req,res) =>{
-    const {name, password, email, nickname} = req.body
-    User.findOne({where:{email}})
-    .then(user =>{
-        if(user){
-            res.send('user already exists')
-        }else{
-            User.create({name, password, email, nickname})
-            // Aquí hace falta 
-            .then(response => res.json({"respuesta": response}))
-            .catch(err => console.error("There was an error", err))
-        }
-    })
-    .catch(err => console.error(err))
-    
-})
+router.post('/register', userController.userRegister)
 
 //Ejemplo de middleware para restringir el acceso a solo gente logeada
 
-router.get('/users', checkAuthentication , (req,res) =>{
-    User.findAll()
-        .then(blogs=>{
-            res.json({"respuestas": blogs})
-        })
-        .catch(err=> console.error(err))
-})
+router.get('/users', checkAuthentication , userController.showUsers)
 
-router.get('/current', checkAuthentication, (req,res)=>{
-    // req.user contains the information provided by deserializeUser
-    let variable = req.user
-    res.send(variable)
-})
+router.get('/current', checkAuthentication, userController.showCurrentUser)
 
 function checkAuthentication(req, res, next){
     if(req.isAuthenticated()){return next()}
