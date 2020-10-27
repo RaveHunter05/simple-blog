@@ -5,6 +5,8 @@ const jwt = require('jsonwebtoken')
 
 const {User} = require('./models')
 
+let {userController} = require('./controllers')
+
 // router.post('/login', (req,res) =>{
 //     // Mock user
 //     const user = {
