@@ -1,4 +1,8 @@
 const {User} = require('./models')
+const bcrypt = require('bcrypt')
+const { json } = require('body-parser')
+
+const saltRounds = 10
 
 let userController = {
     userRegister(req,res){
@@ -8,10 +12,16 @@ let userController = {
             if(user){
                 res.send('user already exists')
             }else{
-                User.create({name, password, email, nickname})
-                // Aquí hace falta 
-                .then(response => res.json({"respuesta": response}))
-                .catch(err => console.error("There was an error", err))
+                bcrypt.genSalt(saltRounds, (err, salt) =>{
+                    if(err){return json({"error": err})}
+                    bcrypt.hash(password,salt,(err, hash)=>{
+                        if(err){return json({"error": err})}
+                        User.create({name, password:hash, email, nickname})
+                        // Aquí hace falta 
+                        .then(response => res.sendStatus(200))
+                        .catch(err => console.error("There was an error", err))
+                    })
+                })
             }
         })
         .catch(err => console.error(err))
